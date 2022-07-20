@@ -1,8 +1,6 @@
 package com.example.loginlogout.presentation.screen.home
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Logout
@@ -11,6 +9,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.loginlogout.navigation.Screen
 import com.google.firebase.auth.FirebaseAuth
@@ -19,6 +20,13 @@ import com.google.firebase.auth.FirebaseAuth
 fun HomeScreen(
     navController: NavController
 ) {
+    val openDialog = remember { mutableStateOf(false) }
+    val currentUser =
+        if(!FirebaseAuth.getInstance().currentUser?.email.isNullOrEmpty())
+            FirebaseAuth.getInstance().currentUser?.email?.split('@')?.get(0)
+        else
+            "N/A"
+
     Surface(
         modifier = Modifier.fillMaxSize()
     ) {
@@ -26,10 +34,16 @@ fun HomeScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            val openDialog = remember {
-                mutableStateOf(false)
-            }
 
+            Text(
+                text = "Hello, ${currentUser.toString()}",
+                fontSize = 30.sp,
+                maxLines = 1,
+                overflow = TextOverflow.Clip
+            )
+
+            Spacer(modifier = Modifier.padding(bottom = 20.dp))
+            
             IconButton(
                 onClick = {
                     openDialog.value = true

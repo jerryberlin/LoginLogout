@@ -1,6 +1,7 @@
 package com.example.loginlogout.presentation.screen.login
 
 import android.widget.Toast
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -35,6 +36,9 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.loginlogout.navigation.Screen
+import com.example.loginlogout.ui.theme.Purple500
+import com.example.loginlogout.ui.theme.Purple700
+import com.example.loginlogout.ui.theme.welcomeScreenBackgroundColor
 
 @Composable
 fun LoginScreen(
@@ -47,7 +51,8 @@ fun LoginScreen(
     Surface(modifier = Modifier.fillMaxSize()) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Top
+            verticalArrangement = Arrangement.Top,
+
         ) {
             Text(
                 modifier = Modifier.padding(top = 24.dp),
