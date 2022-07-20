@@ -21,6 +21,7 @@ import androidx.navigation.NavController
 import com.example.loginlogout.navigation.Screen
 import com.example.loginlogout.ui.theme.White500
 import com.example.loginlogout.ui.theme.White700
+import com.google.firebase.auth.FirebaseAuth
 
 @Composable
 fun SplashScreen(
@@ -41,12 +42,12 @@ fun SplashScreen(
         )
         navController.popBackStack()
         if(onBoardingCompleted) {
-//            if(FirebaseAuth.getInstance().currentUser?.email.isNullOrEmpty()){
-//                navController.navigate(Screen.Login.route)
-//            }else{
-//                navController.navigate(Screen.Home.route)
-//            }
-            navController.navigate(Screen.Login.route)
+            if(FirebaseAuth.getInstance().currentUser?.email.isNullOrEmpty()){
+                navController.navigate(Screen.Login.route)
+            }else{
+                navController.navigate(Screen.Home.route)
+            }
+//            navController.navigate(Screen.Login.route)
         } else {
             navController.navigate(Screen.Welcome.route)
         }

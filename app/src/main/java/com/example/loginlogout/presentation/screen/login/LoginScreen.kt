@@ -41,7 +41,6 @@ fun LoginScreen(
     navController: NavController,
     loginScreenViewModel: LoginScreenViewModel = viewModel()
 ){
-
     val context = LocalContext.current
     val showLoginForm = rememberSaveable { mutableStateOf(true) }
 
