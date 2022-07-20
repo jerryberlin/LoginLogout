@@ -41,6 +41,11 @@ fun SplashScreen(
         )
         navController.popBackStack()
         if(onBoardingCompleted) {
+//            if(FirebaseAuth.getInstance().currentUser?.email.isNullOrEmpty()){
+//                navController.navigate(Screen.Login.route)
+//            }else{
+//                navController.navigate(Screen.Home.route)
+//            }
             navController.navigate(Screen.Login.route)
         } else {
             navController.navigate(Screen.Welcome.route)

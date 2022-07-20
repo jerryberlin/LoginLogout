@@ -1,5 +1,6 @@
 package com.example.loginlogout.presentation.screen.login
 
+import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -20,6 +21,7 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -30,11 +32,17 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.example.loginlogout.navigation.Screen
 
 @Composable
-fun LoginScreen(navController: NavController){
+fun LoginScreen(
+    navController: NavController,
+    loginScreenViewModel: LoginScreenViewModel = viewModel()
+){
 
+    val context = LocalContext.current
     val showLoginForm = rememberSaveable { mutableStateOf(true) }
 
     Surface(modifier = Modifier.fillMaxSize()) {
@@ -48,10 +56,25 @@ fun LoginScreen(navController: NavController){
                 textAlign = TextAlign.Center,
                 fontSize = 32.sp
             )
-            if(showLoginForm.value) UserForm(loading = false, isCreateAccount = false){ email, password -> }
+            if(showLoginForm.value) UserForm(loading = false, isCreateAccount = false){ email, password ->
+                loginScreenViewModel.signInWithEmailAndPassword(email, password){
+                    navController.navigate(Screen.Home.route)
+                }
+            }
             else {
                 UserForm(loading = false, isCreateAccount = true){ email, password ->
-
+                    if(email.contains('@') && email.contains(".com")){
+                        if(password.count() >= 6) {
+                            loginScreenViewModel.createUserWithEmailAndPassword(email, password) {
+                                navController.navigate(Screen.Home.route)
+                            }
+                        }
+                        else {
+                            Toast.makeText(context,"Password must contain at least 6 characters", Toast.LENGTH_SHORT).show()
+                        }
+                    }else{
+                        Toast.makeText(context,"Please enter a valid email", Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
         }

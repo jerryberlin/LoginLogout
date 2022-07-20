@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.loginlogout.presentation.screen.home.HomeScreen
 import com.example.loginlogout.presentation.screen.login.LoginScreen
 import com.example.loginlogout.presentation.screen.splash.SplashScreen
 import com.example.loginlogout.presentation.screen.welcome.WelcomeScreen
@@ -22,7 +23,7 @@ fun Navigation(){
             LoginScreen(navController = navController)
         }
         composable(route = Screen.Home.route){
-
+            HomeScreen(navController = navController)
         }
     }
 }
